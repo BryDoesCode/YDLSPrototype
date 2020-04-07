@@ -22,7 +22,7 @@ public class SFXController : MonoBehaviour
                 Debug.Log("Played Shower SFX");
                 break;
             default:
-                Debug.Log("Unkown SFX: " + sfxName);
+                Debug.Log("Unknown SFX: " + sfxName);
                 break;
         }
     }

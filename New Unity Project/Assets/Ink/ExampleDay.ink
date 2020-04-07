@@ -1,3 +1,4 @@
+INCLUDE RetailWork.ink
 //External Functions for Unity
 
 EXTERNAL EndGame()
@@ -9,11 +10,6 @@ VAR energy = 8
 VAR health = 6
 VAR wellness = 7
 
-//VAR comfort = 5
-//VAR hunger = 2
-//VAR bladder = 10
-//VAR hygiene = 5
-
 
 // Initialize Unity UI
 
@@ -21,10 +17,6 @@ VAR wellness = 7
 ~ health = 6
 ~ wellness = 7
 
-//~ comfort = 5
-//~ hunger = 2
-//~ bladder = 10
-//~ hygiene = 5
 
 
 
@@ -38,19 +30,22 @@ VAR wellness = 7
 --------------------------------------------------------------------------------*/
 
 === morning ===
-#location: apartment
-#time: morning
+#location: Apartment
+#time: Morning
+#background: apartmentMorning
 
+It's morning!
++ [Wake Up]
+-
 {MorningWakeUp()}
 + [Get Out of Bed]
-    You pushed yourself up out of bed. {MorningCondition()}
+    You push yourself up out of bed. {MorningCondition()}
 -
 + [Get Ready]
     You brush your teeth and take your medicine like normal, then turn your attention to food. 
     \-----
     You lost 1 Energy from getting ready.
     ~ energy -= 1
-    
 -
 + [Eat] -> breakfast
 
@@ -65,11 +60,6 @@ What would you like to eat for breakfast?
 	     You gained 1 Health from eating.
 	     ~ health += 1
 	     
-	     /*You lost 5 Bladder from eating. 	     
-	     ~ bladder -= 5
-	     You gained 3 Hunger from eating. 
-	     ~ hunger += 3
-	     */
 	     
 + [Recipe]
 	    
@@ -82,14 +72,6 @@ What would you like to eat for breakfast?
 	    You gained 1 Wellness from the homecooked meal.
 	    ~ wellness += 1
 	    
-	    
-	    /*You lost 5 Bladder from eating. 
-	    ~ bladder -= 5
-	    You gained 5 Hunger from eating.
-	    ~ hunger += 5
-	    You gained 2 Comfort from the homecooked meal.
-	    ~ comfort += 2
-	    */
 
 
 - 
@@ -111,36 +93,43 @@ Would you like to take a shower?
     ~ health += 1
     ~ wellness += 1
     
-    
-    /*You gained 2 Comfort and 5 Hygiene from taking a shower.
-    ~ comfort += 2
-    ~ hygiene += 5
-    */
     #showerSFX
     
     
 + [No]
     No time for a shower this morning. You’d rather just get to work. You get dressed as normal and head to work. 
     \-----
-    //You lost 3 Hygiene from not taking a shower.
+    
     You lost 1 Health and 1 Wellness from not taking a shower.
     You lost 1 Energy from getting dressed.
-    //~ hygiene -= 3
+   
     ~ health -= 1
     ~ wellness -= 1
     ~ energy -= 1
 
 - 
 + [Leave for Work]
-Looks like it's time to go to work!
-{
-- energy <= 2:
-You're exhausted. You only have {energy} Energy left. Just go back to bed.
-- energy <= 5:
-You only have {energy} Energy left and you haven't even left the house. It's going to be a rough day.
-- energy > 5:
-Well, you have {energy} Energy right now. Not the worst start you've had to your day.
 
+-> retailwork
+
+
+=== endofday ===
+#location: Apartment
+#time: Evening
+#background: apartmentEvening
+
+Looks like you made it home for the day. 
++ [Check in with Yourself]
+- 
+{
+- energy <= 0:
+Yeah, you have no energy left. None. How are you even standing?
+- energy <= 2:
+You're exhausted. You only have {energy} Energy left. Better just head to bed.
+- energy <= 5:
+You only have {energy} Energy left, but at least you finished everything you needed to. Right?
+- energy > 5:
+Well, you have {energy} Energy right now. You can actually do something productive tonight. 
 }
 -
 + [Restart]
@@ -187,8 +176,6 @@ Your muscles ache, but nothing more than usual.
 - 2: 
 You actually feel pretty good this morning, for once.
 \-----
-//You gained 1 Comfort from feeling good.
-//~ comfort += 1
 You gained 1 Wellness from feeling good. 
 ~ wellness += 1
 - 3:
@@ -211,11 +198,6 @@ You lost 2 Energy from not sleeping well.
 ~ health = 6
 ~ wellness = 7
 
-/*~ comfort = 5
-~ hunger = 2
-~ bladder = 10
-~ hygiene = 5
-*/
 
 
 /*--------------------------------------------------------------------------------

@@ -9,23 +9,23 @@ public class InkTest : MonoBehaviour
 {
     public TextAsset inkAsset;
     public Button button;
-    //public Text storyText;
     public TextMeshProUGUI storyText;
     public GameObject buttonPanel;
     public StatController StatController;
     public SFXController SFXController;
+    public BackgroundController BackgroundController;
 
     public AudioClip buttonClick;
     private AudioSource audioSource;
 
-
     private Story story;
 
-    //public Font userFont;
     public TMP_FontAsset userFont;
     public int userFontSize;
 
-    // Start is called before the first frame update
+    public TextMeshProUGUI timeLabel;
+    public TextMeshProUGUI locationLabel;
+
     void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -44,25 +44,9 @@ public class InkTest : MonoBehaviour
         story.ObserveVariable("wellness", (string varName, object newValue) => {
             StatController.UpdateWellnessStat((int)newValue);
         });
-
-        /*story.ObserveVariable("comfort", (string varName, object newValue) => {
-            StatController.UpdateComfortStat((int)newValue);
-        });
-        story.ObserveVariable("hunger", (string varName, object newValue) => {
-            StatController.UpdateHungerStat((int)newValue);
-        });
-        story.ObserveVariable("bladder", (string varName, object newValue) => {
-            StatController.UpdateBladderStat((int)newValue);
-        });
-        story.ObserveVariable("hygiene", (string varName, object newValue) => {
-            StatController.UpdateHygieneStat((int)newValue);
-        });*/
-
-
-
+                     
         story.BindExternalFunction("EndGame", () => EndGame());
-
-
+        
         userFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as TMP_FontAsset;
         storyText.fontSize = userFontSize;
         storyText.font = userFont;
@@ -82,7 +66,7 @@ public class InkTest : MonoBehaviour
 
             foreach (string tag in story.currentTags)
             {
-                Debug.Log("Current Tag: " + tag);
+                Debug.Log("Current Tags: " + tag);
                 EvaluateTag(tag);
             }
         }
@@ -147,6 +131,22 @@ public class InkTest : MonoBehaviour
         if (tag.Contains("SFX")) {
             SFXController.SFXPlayer(tag);
         }
+        
+        if(tag.Contains("time"))
+        {
+            timeLabel.text = "<b>" + tag.Substring(6) + "</b>";
+        }
+
+        if (tag.Contains("location"))
+        {
+            locationLabel.text = "<b>" + tag.Substring(10) + "</b>";
+        }
+
+        if(tag.Contains("background"))
+        {
+            BackgroundController.ChangeBackgroundImage(tag.Substring(12));
+        }
+
     }
 
     void EndGame ()
