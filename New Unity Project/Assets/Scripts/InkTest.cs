@@ -11,9 +11,10 @@ public class InkTest : MonoBehaviour
     public Button button;
     public TextMeshProUGUI storyText;
     public GameObject buttonPanel;
+
     public StatController StatController;
     public SFXController SFXController;
-    public BackgroundController BackgroundController;
+    public LabelController LabelController;
 
     public AudioClip buttonClick;
     private AudioSource audioSource;
@@ -23,8 +24,6 @@ public class InkTest : MonoBehaviour
     public TMP_FontAsset userFont;
     public int userFontSize;
 
-    public TextMeshProUGUI timeLabel;
-    public TextMeshProUGUI locationLabel;
 
     void Start()
     {
@@ -36,26 +35,46 @@ public class InkTest : MonoBehaviour
         story.ObserveVariable("energy", (string varName, object newValue) => {
             StatController.UpdateEnergyStat((int)newValue);
         });
-
         story.ObserveVariable("health", (string varName, object newValue) => {
             StatController.UpdateHealthStat((int)newValue);
         });
-
         story.ObserveVariable("wellness", (string varName, object newValue) => {
             StatController.UpdateWellnessStat((int)newValue);
         });
-                     
+
+        story.ObserveVariable("fullDate", (string varName, object newValue) => {
+            LabelController.UpdateDate((string)newValue);
+        });
+        story.ObserveVariable("today", (string varName, object newValue) => {
+            LabelController.UpdateWeekday(newValue);
+        });
+        story.ObserveVariable("time", (string varName, object newValue) => {
+            LabelController.UpdateTimeSlot(newValue);
+        });
+        story.ObserveVariable("location", (string varName, object newValue) => {
+            LabelController.UpdateLocation((string)newValue);
+        });
+        story.ObserveVariable("background", (string varName, object newValue) => {
+            LabelController.UpdateBackground((string)newValue);
+        });
+
+
+        //  ------------------ External Functions
         story.BindExternalFunction("EndGame", () => EndGame());
-        
+
+
+        //  ------------------ Font Options
         userFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as TMP_FontAsset;
         storyText.fontSize = userFontSize;
         storyText.font = userFont;
 
-        Refresh();           
+
+        //  ------------------ Start Loop
+        StoryLoop();           
         
     }
 
-    void Refresh()
+    void StoryLoop()
     {
         ClearUI();        
 
@@ -72,8 +91,7 @@ public class InkTest : MonoBehaviour
         }
 
         if (story.currentChoices.Count > 0)
-        {
-                                  
+        {                                  
 
             foreach (Choice choice in story.currentChoices)
             {
@@ -85,12 +103,9 @@ public class InkTest : MonoBehaviour
                 TextMeshProUGUI choiceText = choiceButton.GetComponentInChildren<TextMeshProUGUI>();
                 choiceText.fontSize = userFontSize;
                 choiceText.font = userFont;
-                //Debug.Log("Choice font: " + choiceText.font + "--- User font: " + userFont);
                 
-                choiceText.text = choice.text.Replace("\\n", "\n");
-
-                //Debug.Log("Choice font: " + choiceText.font + "--- User font: " + userFont);
-
+                choiceText.text = choice.text.Replace("\\n", "\n"); // Allows for newlines during choices.
+                
                 choiceButton.onClick.AddListener(delegate { OnClickChoiceButton(choice); });
             }
 
@@ -102,7 +117,7 @@ public class InkTest : MonoBehaviour
     {
         audioSource.PlayOneShot(buttonClick);
         story.ChooseChoiceIndex(choice.index);
-        Refresh();
+        StoryLoop();
     }
 
     void ClearUI()
@@ -131,24 +146,8 @@ public class InkTest : MonoBehaviour
         if (tag.Contains("SFX")) {
             SFXController.SFXPlayer(tag);
         }
-        
-        if(tag.Contains("time"))
-        {
-            timeLabel.text = "<b>" + tag.Substring(6) + "</b>";
-        }
-
-        if (tag.Contains("location"))
-        {
-            locationLabel.text = "<b>" + tag.Substring(10) + "</b>";
-        }
-
-        if(tag.Contains("background"))
-        {
-            BackgroundController.ChangeBackgroundImage(tag.Substring(12));
-        }
-
     }
-
+        
     void EndGame ()
     {
         Debug.Log("QUIT");

@@ -21,6 +21,7 @@ public class SFXController : MonoBehaviour
                 audioSource.PlayOneShot(showerSFX);
                 Debug.Log("Played Shower SFX");
                 break;
+
             default:
                 Debug.Log("Unknown SFX: " + sfxName);
                 break;

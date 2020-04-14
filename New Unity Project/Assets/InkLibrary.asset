@@ -21,17 +21,9 @@ MonoBehaviour:
     inkAsset: {fileID: 102900000, guid: ca2fda45b58277443976ec1998f730ca, type: 3}
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 0}
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 6b8c8f54930e76244a9e5c36db63aea7, type: 3}
+    jsonAssetPath: {fileID: 0}
+    jsonAsset: {fileID: 0}
   pendingCompilationStack: []
-  compilationStack:
-  - state: 1
-    inkFile:
-      compileAutomatically: 0
-      inkAsset: {fileID: 102900000, guid: 0e31aafec45cb724a9019381e2d93e8b, type: 3}
-      jsonAssetPath: {fileID: 0}
-      jsonAsset: {fileID: 4900000, guid: ea338e4f5b7677140bfadd23dae9ba2d, type: 3}
-    compiledJson: 
-    inkAbsoluteFilePath: F:/Bry Can't Organize/School I Think/THESIS PROJECT/Repos/YDLSPrototype/New
-      Unity Project/Assets/Ink/ExampleDay.ink
-    jsonAbsoluteFilePath: Assets/Ink/ExampleDay.json
-    output: []
-    unhandledErrorOutput: []
+  compilationStack: []

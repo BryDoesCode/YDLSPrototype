@@ -6,11 +6,13 @@
 --------------------------------------------------------------------------------*/
 
 === retailwork ===
-#location: Work
-#time: Midday
-#background: retailWork
+
+~ location = "Work"
+~ background = "retailWork"
+~ time ++
 
 You made it to work. 
+
 + [Go Inside]
 
 - {ArriveAtRetailWork()}
