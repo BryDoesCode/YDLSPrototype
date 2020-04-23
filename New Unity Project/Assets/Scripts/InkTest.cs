@@ -25,6 +25,13 @@ public class InkTest : MonoBehaviour
     public int userFontSize;
 
 
+    //For Text Effect
+    private Queue<string> sentences;
+
+    void Awake()
+    {
+        sentences = new Queue<string>();
+    }
     void Start()
     {
         audioSource = this.GetComponent<AudioSource>();
@@ -78,7 +85,11 @@ public class InkTest : MonoBehaviour
     {
         ClearUI();        
 
-        storyText.text = GetNextStoryBlock();
+        sentences.Clear();
+        sentences.Enqueue(GetNextStoryBlock());
+        DisplayNextSentences();
+        //storyText.text = GetNextStoryBlock();
+        //Debug.Log("storyText");
 
         if (story.currentTags.Count > 0)
         {
@@ -111,6 +122,32 @@ public class InkTest : MonoBehaviour
 
         }
         
+    }
+
+    public void DisplayNextSentences()
+    {
+        if(sentences.Count==0)
+        {
+            return;
+        }
+        string sentence = sentences.Dequeue();
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentence));
+    }
+
+    IEnumerator TypeSentence(string sentence)
+    {
+        storyText.text = "";
+        foreach( char letter in sentence.ToCharArray())
+        {
+            storyText.text += letter;
+            yield return null;
+            if(Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
+            {
+                storyText.text = sentence;
+                yield break;
+            }
+        }
     }
 
     void OnClickChoiceButton(Choice choice)
