@@ -22,7 +22,7 @@ You've started with {energy} Energy today. Make it count!
 + [Get Out of Bed]
     You push yourself up out of bed. {MorningCondition()}
 -
-+ [Get Ready]
++ [Get Ready{statHints: \\n<size={statSize}>(-1 Energy)</size>}]
     You brush your teeth and take your medicine like normal, then turn your attention to food. 
     \-----
     You lost 1 Energy from getting ready.
@@ -32,17 +32,20 @@ You've started with {energy} Energy today. Make it count!
 
 
 = breakfast
+~ background = "apartmentKitchenMorning"
+What would you like to eat for breakfast? 
+You have {prepackagedMealCount} prepackaged meal{prepackagedMealCount>1: s} and {foodIngredientsCount} set{foodIngredientsCount!=1: s} of ingredients.
 
-What would you like to eat for breakfast?
-
-+ [Prepacked Meal]
+ + {prepackagedMealCount > 0}[Prepacked Meal{statHints: \\n<size={statSize}>(+1 Health)\\n(-1 Prepackaged Meal)</size>}]
 	     {~You settled on cereal this morning. It’s quick and it’s easy. | It's a toast kind of morning. {~This time with butter.| A quick swipe of peanut butter makes all the difference. | Some jelly on top adds just enough sweetness.} | Just a container of yogurt should be fine.} 
 	     \-----
 	     You gained 1 Health from eating.
 	     ~ health += 1
+	     You used up 1 prepackaged meal. 
+	     ~ prepackagedMealCount -= 1
 	     
 	     
-+ [Recipe]
++ {foodIngredientsCount > 0}[Recipe{statHints: \\n<size={statSize}>(-2 Energy)\\n(+2 Health / +1 Wellness)\\n(-1 Ingredients Set)</size>}]
 	    
 	    {~Today was a pancake morning. Sure, you’re a bit tired now but nothing beats the smell of freshly cooked pancakes. | You're exhausted already, but that omlette sure was worth it.}
 	    \-----
@@ -52,18 +55,26 @@ What would you like to eat for breakfast?
 	    ~ health += 2
 	    You gained 1 Wellness from the homecooked meal.
 	    ~ wellness += 1
+	    You used up 1 ingredients set.
+	    ~ foodIngredientsCount -= 1
 	    
-
++ [Skip Eating{statHints: \\n<size={statSize}>(-1 Health / -1 Wellness)</size>}]
+        Guess today is not a food day. 
+        \-----
+	    You lost 1 Health and 1 Wellness from not eating.
+	    ~ health -= 1
+	    ~ wellness -= 1
 
 - 
 + [Continue Getting Ready] -> shower
 
 
 = shower
+~ background = "apartmentMorning"
 
 - You still have some time this morning. 
 Would you like to take a shower? 
-+ [Yes]
++ [Yes{statHints: \\n<size={statSize}>(-3 Energy)\\n(+1 Health / +1 Wellness)</size>}]
     
     Ah, that was a wonderful shower. You feel a bit more tired, but you’re clean and ready to face the day. It felt great. Now it’s time to get dressed and head out.
     \-----
@@ -76,7 +87,7 @@ Would you like to take a shower?
     
     #showerSFX
     
-+ [No]
++ [No{statHints: \\n<size={statSize}>(-1 Health / -1 Wellness / -1 Energy)</size>}]
     No time for a shower this morning. You’d rather just get to work. You get dressed as normal and head to work. 
     \-----
     

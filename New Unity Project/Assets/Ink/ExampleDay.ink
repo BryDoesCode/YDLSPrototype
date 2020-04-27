@@ -1,8 +1,15 @@
-INCLUDE RetailWork.ink
+// Includes
+
+
 INCLUDE Apartment.ink
+INCLUDE RetailWork.ink
+INCLUDE CharacterCreation.ink
+INCLUDE Inventory.ink
 
 
-//External Functions for Unity
+
+
+// External Functions for Unity
 
 EXTERNAL EndGame()
 
@@ -45,6 +52,15 @@ VAR time = Morning
 
 VAR location = ""
 VAR background = ""
+
+
+// Difficulty Variable
+
+VAR statHints = true
+
+// UI Variables
+
+VAR statSize = 16
 
 
 // Initialize Unity UI

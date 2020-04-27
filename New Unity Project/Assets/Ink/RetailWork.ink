@@ -9,7 +9,7 @@
 
 ~ location = "Work"
 ~ background = "retailWork"
-~ time ++
+~ time = Midday
 
 You made it to work. 
 
@@ -17,7 +17,7 @@ You made it to work.
 
 - {ArriveAtRetailWork()}
 
-+ [Work Hard]
++ [Work Hard{statHints: \\n<size={statSize}>(-3 Energy / -2 Health)\\n(+2 Wellness)</size>}]
     You decide to give work your all today. You clean shelves, organize clothing, and help customers. You feel really accomplished and in a lot of pain by the end of the day.
     \-----
     You lost 3 Energy and 2 Health from working hard.
@@ -27,7 +27,7 @@ You made it to work.
     ~wellness += 2
     
     
-+ [Slack Off]
++ [Slack Off{statHints: \\n<size={statSize}>(-2 Energy)</size>}]
     It's not really like they pay you enough for this job anyway. You do your work, basically, but don't really put any effort into it. Whatever. 
     \-----
     You lost 2 Energy and 1 Health from working. 
