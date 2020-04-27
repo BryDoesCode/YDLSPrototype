@@ -74,7 +74,8 @@ VAR statSize = 16
 ~ location = "Apartment"
 ~ background = "apartmentMorning"
 
-
+~ foodIngredientsCount = 2
+~ prepackagedMealCount = 1
 
 
 /*--------------------------------------------------------------------------------
@@ -111,6 +112,8 @@ VAR statSize = 16
 ~ location = "Apartment"
 ~ background = "apartmentMorning"
 
+~ foodIngredientsCount = 2
+~ prepackagedMealCount = 1
 
 /*--------------------------------------------------------------------------------
 

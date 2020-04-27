@@ -34,18 +34,18 @@ You've started with {energy} Energy today. Make it count!
 = breakfast
 ~ background = "apartmentKitchenMorning"
 What would you like to eat for breakfast? 
-You have {prepackagedMealCount} prepackaged meal{prepackagedMealCount>1: s} and {foodIngredientsCount} set{foodIngredientsCount!=1: s} of ingredients.
+You have {prepackagedMealCount} prepackaged meal{prepackagedMealCount!=1:s} and {foodIngredientsCount} set{foodIngredientsCount!=1:s} of ingredients.
 
  + {prepackagedMealCount > 0}[Prepacked Meal{statHints: \\n<size={statSize}>(+1 Health)\\n(-1 Prepackaged Meal)</size>}]
 	     {~You settled on cereal this morning. It’s quick and it’s easy. | It's a toast kind of morning. {~This time with butter.| A quick swipe of peanut butter makes all the difference. | Some jelly on top adds just enough sweetness.} | Just a container of yogurt should be fine.} 
 	     \-----
 	     You gained 1 Health from eating.
 	     ~ health += 1
-	     You used up 1 prepackaged meal. 
+	     You used up 1 Prepackaged Meal. 
 	     ~ prepackagedMealCount -= 1
 	     
 	     
-+ {foodIngredientsCount > 0}[Recipe{statHints: \\n<size={statSize}>(-2 Energy)\\n(+2 Health / +1 Wellness)\\n(-1 Ingredients Set)</size>}]
++ {foodIngredientsCount > 0}[Recipe{statHints: \\n<size={statSize}>(-2 Energy)\\n(+2 Health / +1 Wellness)\\n(-1 Set of Ingredients)</size>}]
 	    
 	    {~Today was a pancake morning. Sure, you’re a bit tired now but nothing beats the smell of freshly cooked pancakes. | You're exhausted already, but that omlette sure was worth it.}
 	    \-----
@@ -55,7 +55,7 @@ You have {prepackagedMealCount} prepackaged meal{prepackagedMealCount>1: s} and 
 	    ~ health += 2
 	    You gained 1 Wellness from the homecooked meal.
 	    ~ wellness += 1
-	    You used up 1 ingredients set.
+	    You used up 1 Set of Ingredients.
 	    ~ foodIngredientsCount -= 1
 	    
 + [Skip Eating{statHints: \\n<size={statSize}>(-1 Health / -1 Wellness)</size>}]

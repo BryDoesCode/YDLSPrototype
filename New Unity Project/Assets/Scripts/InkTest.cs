@@ -15,6 +15,7 @@ public class InkTest : MonoBehaviour
     public StatController StatController;
     public SFXController SFXController;
     public LabelController LabelController;
+    public InventoryController InventoryController;
 
     public AudioClip buttonClick;
     private AudioSource audioSource;
@@ -39,6 +40,7 @@ public class InkTest : MonoBehaviour
         story = new Story(inkAsset.text);
         
         // ------------------ Observeable Variables
+        // Stats
         story.ObserveVariable("energy", (string varName, object newValue) => {
             StatController.UpdateEnergyStat((int)newValue);
         });
@@ -49,6 +51,7 @@ public class InkTest : MonoBehaviour
             StatController.UpdateWellnessStat((int)newValue);
         });
 
+        // Date / UI Stuff
         story.ObserveVariable("fullDate", (string varName, object newValue) => {
             LabelController.UpdateDate((string)newValue);
         });
@@ -65,6 +68,13 @@ public class InkTest : MonoBehaviour
             LabelController.UpdateBackground((string)newValue);
         });
 
+        // Inventory
+        story.ObserveVariable("prepackagedMealCount", (string varName, object newValue) => {
+            InventoryController.UpdatePrepackagedFoodQuantity((int)newValue);
+        });
+        story.ObserveVariable("foodIngredientsCount", (string varName, object newValue) => {
+            InventoryController.UpdateIngredientsSet((int)newValue);
+        });
 
         //  ------------------ External Functions
         story.BindExternalFunction("EndGame", () => EndGame());
