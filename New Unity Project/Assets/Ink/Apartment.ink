@@ -34,7 +34,7 @@ You've started with {energy} Energy today. Make it count!
 = breakfast
 ~ background = "apartmentKitchenMorning"
 What would you like to eat for breakfast? 
-You have {prepackagedMealCount} prepackaged meal{prepackagedMealCount!=1:s} and {foodIngredientsCount} set{foodIngredientsCount!=1:s} of ingredients.
+You have {prepackagedMealCount} Prepackaged Meal{prepackagedMealCount!=1:s} and {foodIngredientsCount} Set{foodIngredientsCount!=1:s} of Ingredients.
 
  + {prepackagedMealCount > 0}[Prepacked Meal{statHints: \\n<size={statSize}>(+1 Health)\\n(-1 Prepackaged Meal)</size>}]
 	     {~You settled on cereal this morning. It’s quick and it’s easy. | It's a toast kind of morning. {~This time with butter.| A quick swipe of peanut butter makes all the difference. | Some jelly on top adds just enough sweetness.} | Just a container of yogurt should be fine.} 

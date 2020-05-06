@@ -7,6 +7,7 @@ public class InventoryController : MonoBehaviour
 {
     public TextMeshProUGUI prepackagedMealQuantityText;
     public TextMeshProUGUI ingredientsSetQuantityText;
+    public TextMeshProUGUI moneyQuantityText;
 
 
     public void UpdatePrepackagedFoodQuantity(int quantity)
@@ -17,5 +18,10 @@ public class InventoryController : MonoBehaviour
     public void UpdateIngredientsSet(int quantity)
     {
         ingredientsSetQuantityText.text = quantity.ToString();
+    }
+
+    public void UpdateMoneyQuantity(float quantity)
+    {
+        moneyQuantityText.text = "$" + quantity.ToString();
     }
 }

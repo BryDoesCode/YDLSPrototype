@@ -16,6 +16,7 @@ public class InkTest : MonoBehaviour
     public SFXController SFXController;
     public LabelController LabelController;
     public InventoryController InventoryController;
+    public StoreController StoreController;
 
     public AudioClip buttonClick;
     private AudioSource audioSource;
@@ -69,11 +70,22 @@ public class InkTest : MonoBehaviour
         });
 
         // Inventory
+        story.ObserveVariable("money", (string varName, object newValue) => {
+            InventoryController.UpdateMoneyQuantity((float)newValue);
+        });
         story.ObserveVariable("prepackagedMealCount", (string varName, object newValue) => {
             InventoryController.UpdatePrepackagedFoodQuantity((int)newValue);
         });
         story.ObserveVariable("foodIngredientsCount", (string varName, object newValue) => {
             InventoryController.UpdateIngredientsSet((int)newValue);
+        });
+
+        // Store
+        story.ObserveVariable("storePrompt", (string varName, object newValue) => {
+            StoreController.StoreState((int)newValue);
+        });
+        story.ObserveVariable("purchaseResponse", (string varName, object newValue) => {
+            StoreController.UpdatePurchaseResponse((string)newValue);
         });
 
         //  ------------------ External Functions
@@ -194,7 +206,29 @@ public class InkTest : MonoBehaviour
             SFXController.SFXPlayer(tag);
         }
     }
-        
+
+    public void CallInkFunction(string functionName)
+    {
+        story.EvaluateFunction(functionName);
+    }
+
+    public bool CallInkPurchaseFunction(int prepackagedQuantity, int ingredientsQuantity)
+    {
+        if((int)story.EvaluateFunction("PurchaseItems", prepackagedQuantity, ingredientsQuantity) == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /*public void CallInkFunction(string functionName, string variable)
+    {
+        story.EvaluateFunction(functionName, variable);
+    }*/
+
     void EndGame ()
     {
         Debug.Log("QUIT");

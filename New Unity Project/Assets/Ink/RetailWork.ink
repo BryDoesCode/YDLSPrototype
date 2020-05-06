@@ -8,13 +8,13 @@
 === retailwork ===
 
 ~ location = "Work"
-~ background = "retailWork"
+~ background = "retailWorkFront"
 ~ time = Midday
 
 You made it to work. 
 
 + [Go Inside]
-
+~ background = "retailWorkRegister"
 - {ArriveAtRetailWork()}
 
 + [Work Hard{statHints: \\n<size={statSize}>(-3 Energy / -2 Health)\\n(+2 Wellness)</size>}]
@@ -37,6 +37,9 @@ You made it to work.
 + [Head Home]
 
 -> endofday
+
++ [Go to Store]
+-> store
 
 /*--------------------------------------------------------------------------------
 

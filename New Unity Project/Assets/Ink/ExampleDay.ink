@@ -3,8 +3,11 @@
 
 INCLUDE Apartment.ink
 INCLUDE RetailWork.ink
+INCLUDE ConvenienceStore.ink
 INCLUDE CharacterCreation.ink
 INCLUDE Inventory.ink
+
+
 
 
 
@@ -63,6 +66,11 @@ VAR statHints = true
 VAR statSize = 16
 
 
+// Store Variables
+
+VAR storePrompt = false
+VAR purchaseResponse = ""
+
 // Initialize Unity UI
 
 ~ energy = 8
@@ -74,8 +82,11 @@ VAR statSize = 16
 ~ location = "Apartment"
 ~ background = "apartmentMorning"
 
+~ money = 50.00
 ~ foodIngredientsCount = 2
 ~ prepackagedMealCount = 1
+
+~ storePrompt = false
 
 
 /*--------------------------------------------------------------------------------
@@ -114,6 +125,8 @@ VAR statSize = 16
 
 ~ foodIngredientsCount = 2
 ~ prepackagedMealCount = 1
+~ money = 50.00
+~ storePrompt = false
 
 /*--------------------------------------------------------------------------------
 
