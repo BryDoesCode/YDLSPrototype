@@ -6,6 +6,8 @@ INCLUDE RetailWork.ink
 INCLUDE ConvenienceStore.ink
 INCLUDE CharacterCreation.ink
 INCLUDE Inventory.ink
+INCLUDE CoworkerCreation
+
 
 
 
@@ -71,6 +73,9 @@ VAR statSize = 16
 VAR storePrompt = false
 VAR purchaseResponse = ""
 
+// Conversation Variables
+VAR conversationActive = false
+
 // Initialize Unity UI
 
 ~ energy = 8
@@ -89,12 +94,14 @@ VAR purchaseResponse = ""
 ~ storePrompt = false
 
 
+
 /*--------------------------------------------------------------------------------
 
 	Start the demo!
 
 --------------------------------------------------------------------------------*/
 
+{GenerateCoworker()}
 -> morning
 
 
@@ -127,6 +134,8 @@ VAR purchaseResponse = ""
 ~ prepackagedMealCount = 1
 ~ money = 50.00
 ~ storePrompt = false
+
+{GenerateCoworker()}
 
 /*--------------------------------------------------------------------------------
 

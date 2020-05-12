@@ -34,6 +34,20 @@ You made it to work.
     ~energy -=2
 -
 
+Time for your afternoon break! 
+
++ [Take a Quick Nap{statHints: \\n<size={statSize}>(+1 Energy)</size>}]
+    You lean back in a chair in the corner of the break room. You feel like you only closed your eyes for a second before it's time to get back to work, but at least you feel a bit refreshed. 
+    \-----
+    You gained 1 Energy from your nap. 
+    
+    
++ [Talk to a Coworker]
+    -> coworkerConversation ->
+    
+-
+You made it to the end of the day. Finally. 
+
 + [Head Home]
 
 -> endofday

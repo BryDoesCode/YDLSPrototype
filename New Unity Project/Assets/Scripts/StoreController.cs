@@ -21,7 +21,6 @@ public class StoreController : MonoBehaviour
 
     private int ingredientsPrice = 3;
     private int prepackedPrice = 5;
-    private bool purchaseSuccess;
 
     public void PurchaseItems()
     {
@@ -61,17 +60,6 @@ public class StoreController : MonoBehaviour
         purchaseResponseText.text = text;
     }
 
-    public void UpdatePurchaseSuccess(int state)
-    {
-        if (state == 1)
-        {
-            purchaseSuccess = true;
-        }
-        else
-        {
-            purchaseSuccess = false;
-        }
-    }
 
     public void CloseStore()
     {

@@ -12,6 +12,12 @@ public class InkTest : MonoBehaviour
     public TextMeshProUGUI storyText;
     public GameObject buttonPanel;
 
+    public TextMeshProUGUI conversationText;
+    public Button conversationButton;
+    private bool conversationActive;
+    public GameObject conversationContainer;
+    public GameObject conversationButtonContainer;
+
     public StatController StatController;
     public SFXController SFXController;
     public LabelController LabelController;
@@ -88,6 +94,11 @@ public class InkTest : MonoBehaviour
             StoreController.UpdatePurchaseResponse((string)newValue);
         });
 
+        // Conversation
+        story.ObserveVariable("conversationActive", (string varName, object newValue) => {
+            ConversationToggle((int)newValue);
+        });
+
         //  ------------------ External Functions
         story.BindExternalFunction("EndGame", () => EndGame());
 
@@ -124,21 +135,30 @@ public class InkTest : MonoBehaviour
         }
 
         if (story.currentChoices.Count > 0)
-        {                                  
-
+        {
             foreach (Choice choice in story.currentChoices)
             {
-                
-                Button choiceButton = Instantiate(button) as Button;
-                
-                choiceButton.transform.SetParent(buttonPanel.transform, false);
+                Button choiceButton;
+
+                if (conversationActive)
+                {
+                    choiceButton = Instantiate(conversationButton) as Button;
+
+                    choiceButton.transform.SetParent(conversationButtonContainer.transform, false);                    
+                }
+                else
+                {
+                    choiceButton = Instantiate(button) as Button;
+
+                    choiceButton.transform.SetParent(buttonPanel.transform, false);                                        
+                }
 
                 TextMeshProUGUI choiceText = choiceButton.GetComponentInChildren<TextMeshProUGUI>();
                 choiceText.fontSize = userFontSize;
                 choiceText.font = userFont;
-                
+
                 choiceText.text = choice.text.Replace("\\n", "\n"); // Allows for newlines during choices.
-                
+
                 choiceButton.onClick.AddListener(delegate { OnClickChoiceButton(choice); });
             }
 
@@ -159,15 +179,32 @@ public class InkTest : MonoBehaviour
 
     IEnumerator TypeSentence(string sentence)
     {
-        storyText.text = "";
-        foreach( char letter in sentence.ToCharArray())
-        {
-            storyText.text += letter;
-            yield return null;
-            if(Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
+        if (conversationActive)
+        {            
+            conversationText.text = "";
+            foreach (char letter in sentence.ToCharArray())
             {
-                storyText.text = sentence;
-                yield break;
+                conversationText.text += letter;
+                yield return null;
+                if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
+                {
+                    conversationText.text = sentence;
+                    yield break;
+                }
+            }
+        }
+        else
+        {
+            storyText.text = "";
+            foreach (char letter in sentence.ToCharArray())
+            {
+                storyText.text += letter;
+                yield return null;
+                if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
+                {
+                    storyText.text = sentence;
+                    yield break;
+                }
             }
         }
     }
@@ -181,11 +218,24 @@ public class InkTest : MonoBehaviour
 
     void ClearUI()
     {
-        int childCount = buttonPanel.transform.childCount;
-        for (int i = childCount - 1; i >= 0; --i)
+        int childCount = 0;
+        if (conversationActive)
         {
-            GameObject.Destroy(buttonPanel.transform.GetChild(i).gameObject);
+            childCount = conversationButtonContainer.transform.childCount;
+            for (int i = childCount - 1; i >= 0; --i)
+            {
+                GameObject.Destroy(conversationButtonContainer.transform.GetChild(i).gameObject);
+            }
         }
+        else
+        {
+            childCount = buttonPanel.transform.childCount;
+            for (int i = childCount - 1; i >= 0; --i)
+            {
+                GameObject.Destroy(buttonPanel.transform.GetChild(i).gameObject);
+            }
+        }
+        
     }
 
     string GetNextStoryBlock()
@@ -204,6 +254,21 @@ public class InkTest : MonoBehaviour
     {
         if (tag.Contains("SFX")) {
             SFXController.SFXPlayer(tag);
+        }
+    }
+
+    void ConversationToggle(int value)
+    {
+        if (value == 1)
+        {
+            conversationActive = true;
+            conversationContainer.SetActive(true);
+        }
+        else
+        {
+            conversationActive = false;
+            conversationContainer.SetActive(false);
+
         }
     }
 

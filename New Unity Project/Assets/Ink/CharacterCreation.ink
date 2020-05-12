@@ -44,8 +44,8 @@ VAR moles = 1
 
 // Basic Info
 
-VAR firstName = "first"
-VAR lastName = "last"
+VAR firstName = "First"
+VAR lastName = "Last"
 
 
 // Pronouns
