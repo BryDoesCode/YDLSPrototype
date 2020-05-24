@@ -84,33 +84,33 @@ VAR relationshipWithPlayer = 0
 
 // Face
 
-~ coworkerFaceShape = RANDOM(1, 5)
-~ coworkerSkinColor = RANDOM(1, 5)
-~ coworkerEyeShape = RANDOM(1, 5)
-~ coworkerEyeColor = RANDOM(1, 5) 
-~ coworkerNoseShape = RANDOM(1, 5)
-~ coworkerMouthShape = RANDOM(1, 5)
-~ coworkerEarShape = RANDOM(1, 5)
+~ coworkerFaceShape = RANDOM(0, 3)
+~ coworkerSkinColor = RANDOM(0, 7)
+~ coworkerEyeShape = RANDOM(0, 3)
+~ coworkerEyeColor = RANDOM(0, 7) 
+~ coworkerNoseShape = RANDOM(0, 5)
+~ coworkerMouthShape = RANDOM(0, 3)
+~ coworkerEarShape = RANDOM(0, 5)
 
 
 //  Hair
 
-~ coworkerBangShape = RANDOM(1, 5)
-~ coworkerHairShape = RANDOM(1, 5)
-~ coworkerHairColor = RANDOM(1, 5)
+~ coworkerBangShape = RANDOM(0, 5)
+~ coworkerHairShape = RANDOM(0, 4)
+~ coworkerHairColor = RANDOM(0, 7)
 
 
 // Facial Hair
 
-~ coworkerMustache = RANDOM(1, 5)
-~ coworkerBeard = RANDOM(1, 5)
+~ coworkerMustache = RANDOM(0, 5)
+~ coworkerBeard = RANDOM(0, 5)
 
 
 // Details
 
-~ coworkerPiercings = RANDOM(1, 5)
-~ coworkerFreckles = RANDOM(1, 5)
-~ coworkerMoles = RANDOM(1, 5)
+~ coworkerPiercings = RANDOM(0, 5)
+~ coworkerFreckles = RANDOM(0, 5)
+~ coworkerMoles = RANDOM(0, 5)
 
 
 // Basic Info

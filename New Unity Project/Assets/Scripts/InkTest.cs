@@ -17,12 +17,20 @@ public class InkTest : MonoBehaviour
     private bool conversationActive;
     public GameObject conversationContainer;
     public GameObject conversationButtonContainer;
+    public TextMeshProUGUI relationshipText;
+    public TextMeshProUGUI coworkerName;
+    public GameObject contactListImage;
+    public GameObject conversationImage;
+    public GameObject coworkerAvatar;
+    public GameObject characterCreationImage;
+    public GameObject avatarPrefab;
 
     public StatController StatController;
     public SFXController SFXController;
     public LabelController LabelController;
     public InventoryController InventoryController;
     public StoreController StoreController;
+    public CharacterCreationController CharacterCreationController; 
 
     public AudioClip buttonClick;
     private AudioSource audioSource;
@@ -38,10 +46,15 @@ public class InkTest : MonoBehaviour
 
     void Awake()
     {
-        sentences = new Queue<string>();
+        sentences = new Queue<string>();        
     }
     void Start()
     {
+        /*Person ResetCharacter = new Person(1, 7, 1, 1,
+                1, 1, 1, "Assets/Prefabs/PlayerCharacter.prefab");
+        GameObject avatar = Instantiate(avatarPrefab) as GameObject;
+        avatar.transform.SetParent(characterCreationImage.transform, false);*/
+
         audioSource = this.GetComponent<AudioSource>();
 
         story = new Story(inkAsset.text);
@@ -98,20 +111,25 @@ public class InkTest : MonoBehaviour
         story.ObserveVariable("conversationActive", (string varName, object newValue) => {
             ConversationToggle((int)newValue);
         });
+        story.ObserveVariable("relationshipWithPlayer", (string varName, object newValue) => {
+            UpdateRelationships((int)newValue);
+        });
 
         //  ------------------ External Functions
         story.BindExternalFunction("EndGame", () => EndGame());
+        story.BindExternalFunction("UpdateNPCs", () => UpdateNPCs());
 
 
         //  ------------------ Font Options
         userFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as TMP_FontAsset;
         storyText.fontSize = userFontSize;
-        storyText.font = userFont;
+        storyText.font = userFont;             
 
 
         //  ------------------ Start Loop
         StoryLoop();           
         
+
     }
 
     void StoryLoop()
@@ -289,10 +307,52 @@ public class InkTest : MonoBehaviour
         }
     }
 
+    public void CallInkPlayerCharacterCreation(string firstName, string lastName)
+    {
+        //story.EvaluateFunction("CreatePlayerCharacter", firstName, lastName);
+        story.variablesState["firstName"] = firstName;
+        story.variablesState["lastName"] = lastName;
+        Debug.Log(firstName + " " + lastName);
+        Debug.Log(story.variablesState["firstName"]);
+    }
+
     /*public void CallInkFunction(string functionName, string variable)
     {
         story.EvaluateFunction(functionName, variable);
     }*/
+
+    public void UpdateRelationships(int relationshipvalue)
+    {
+        relationshipText.text = relationshipvalue.ToString();
+    }
+
+    public void UpdateNPCs()
+    {
+        coworkerName.text = story.variablesState["coworkerFirstName"].ToString();
+        Debug.Log((int)story.variablesState["coworkerSkinColor"] + " " + (int)story.variablesState["coworkerHairColor"] + " " +
+            (int)story.variablesState["coworkerFaceShape"] + " " + (int)story.variablesState["coworkerEyeShape"] + " " +
+            (int)story.variablesState["coworkerMouthShape"] + " " + (int)story.variablesState["coworkerHairShape"]);
+        CharacterCreationController.CreateNPC(story.variablesState["coworkerFirstName"].ToString(), story.variablesState["coworkerLastName"].ToString(), (int)story.variablesState["coworkerSkinColor"], 7/*(int)story.variablesState["coworkerEyeColor"]*/, (int)story.variablesState["coworkerHairColor"],
+            (int)story.variablesState["coworkerFaceShape"], (int)story.variablesState["coworkerEyeShape"], (int)story.variablesState["coworkerMouthShape"],
+            (int)story.variablesState["coworkerHairShape"], coworkerAvatar
+            );
+        GameObject coworkerContactList = Instantiate(coworkerAvatar);
+        coworkerContactList.transform.SetParent(contactListImage.transform, false);
+        coworkerContactList.transform.localScale = new Vector3(.15f, .15f, 1f);
+        coworkerContactList.transform.localPosition = new Vector3(0, 0, 0);
+        coworkerContactList.SetActive(true);
+        Debug.Log("Contact List Pos: " + coworkerContactList.transform.localPosition);
+
+
+        GameObject coworkerConversation = Instantiate(coworkerAvatar);
+        coworkerConversation.transform.SetParent(conversationImage.transform, false);
+        coworkerConversation.transform.localPosition = new Vector3(0, 0, 0);
+        coworkerConversation.transform.localScale = new Vector3(.8f, .8f, 1f);
+        coworkerConversation.SetActive(true);
+
+        Debug.Log("Contact List Pos: " + coworkerContactList.transform.localPosition);
+
+    }
 
     void EndGame ()
     {

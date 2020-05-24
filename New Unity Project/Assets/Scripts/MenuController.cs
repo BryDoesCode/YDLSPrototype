@@ -8,6 +8,6 @@ public class MenuController : MonoBehaviour
     
     public void StartGame()
     {
-        SceneManager.LoadSceneAsync("Introduction");
+        SceneManager.LoadSceneAsync("Gameplay");
     }
 }

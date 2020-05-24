@@ -8,9 +8,9 @@
 // Face
 
 VAR faceShape = 1
-VAR skinColor = 000000 //hex
+VAR skinColor = 1
 VAR eyeShape = 1
-VAR eyeColor = 000000 //hex
+VAR eyeColor = 1
 VAR noseShape = 1
 VAR mouthShape = 1
 VAR earShape = 1
@@ -20,7 +20,7 @@ VAR earShape = 1
 
 VAR bangShape = 1
 VAR hairShape = 1
-VAR hairColor = 000000 //hex
+VAR hairColor = 1
 
 
 // Facial Hair
@@ -65,3 +65,7 @@ LIST personality = low, neutral, high
 VAR extroversion = neutral
 VAR neatness = neutral
 VAR activeness = neutral
+
+=== function CreatePlayerCharacter(firstString, lastString)
+firstName = firstString
+lastName = lastString

@@ -6,7 +6,7 @@ INCLUDE RetailWork.ink
 INCLUDE ConvenienceStore.ink
 INCLUDE CharacterCreation.ink
 INCLUDE Inventory.ink
-INCLUDE CoworkerCreation
+INCLUDE CoworkerCreation.ink
 
 
 
@@ -17,6 +17,7 @@ INCLUDE CoworkerCreation
 // External Functions for Unity
 
 EXTERNAL EndGame()
+EXTERNAL UpdateNPCs()
 
 /*--------------------------------------------------------------------------------
 
@@ -102,6 +103,7 @@ VAR conversationActive = false
 --------------------------------------------------------------------------------*/
 
 {GenerateCoworker()}
+{UpdateNPCs()}
 -> morning
 
 
@@ -172,4 +174,7 @@ VAR conversationActive = false
 
 
 === function EndGame()
+~ return
+
+=== function UpdateNPCs()
 ~ return

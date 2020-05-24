@@ -7,6 +7,7 @@ public class CellphoneController : MonoBehaviour
     public GameObject cellphone;
     public GameObject homeScreen;
     public GameObject inventoryScreen;
+    public GameObject contactScreen;
 
     public void CellphoneOnClick()
     {
@@ -30,7 +31,17 @@ public class CellphoneController : MonoBehaviour
         inventoryScreen.SetActive(false);
     }
 
-    
+    public void ContactsOnClick()
+    {
+        homeScreen.SetActive(false);
+        contactScreen.SetActive(true);
+    }
+
+    public void ContactExitOnClick()
+    {
+        homeScreen.SetActive(true);
+        contactScreen.SetActive(false);
+    }
 
 
 }
